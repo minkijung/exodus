@@ -1,0 +1,304 @@
+﻿<!doctype html>
+<html>
+
+	<head>
+		<!-- 브라우저 인코딩 형식 -->
+		<meta charset="utf-8">
+		<!-- 화면 사이즈가 달라도 확대축소 방지 (비율일정) -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
+		<!-- 브라우저 타이틀 -->
+		<title>브라우저 타이틀</title>
+
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="./js/jquery-ui.min.js"></script>
+	</head>
+
+
+	<body>
+
+
+		<div class = 'bg'></div>
+		<div class = 'mainframe'>
+			<div class = 'pwinput'>
+				<input class = 'input_pw' id = 'val_pw' maxlength = "6"/>
+				<span id = 'btn_ok'>확인</span>
+			</div>
+			<div class = 'ninfo'>
+				###
+			</div>
+		</div>
+		<div class = 'view'>
+			<div class = 'txt'>내용 입니다.</div>
+			<div>
+			<span id = 'btn_next'>정답 보기</span>
+			<span id = 'btn_close'>닫기</span>
+			</div>
+		</div>
+		<div class = 'detail_view'>
+			<div class = 'txt'>내용 입니다.</div>
+			<span id = 'btn_detail_close'>닫기</span>
+		</div>
+		<div class = 'image_view'>
+			<div class = 'txt'>내용 입니다.</div>
+			<span id = 'btn_image_close'>닫기</span>
+		</div>
+	</body>
+
+
+	<style>
+		html {
+			margin: 0;
+			padding: 0;
+			-ms-user-select: none; -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; user-select: none; cursor: default;
+		}
+		.bg {
+			background: url('bg.jpg') center center no-repeat; background-size: cover;
+			position: absolute; top:0; left:0; right:0; bottom: 0;
+		}
+		.mainframe {
+			position: absolute; top:300px; left:0; right:0; bottom: 0;
+			text-align: center;
+		}
+		.pwinput {
+			display: block; margin-top: 50px;
+		}
+		/*패스워드 입력 창*/
+		.input_pw {
+			height: 60px;
+			border-radius: 0px;
+			border: 3px solid #DEDEDE;
+			text-align: center;
+			padding: 0;
+			width: 300px;
+			line-height: 40px;
+			font-size: 40px;
+			background: #FFF;
+		}
+		/*확인창*/
+		.input_pw:focus {outline: none;}
+		#btn_ok {
+			display: inline-block;
+			height: 60px;
+			background: #FFFFFF; color: #474819;
+			border-radius: 0;
+			padding: 0;
+			line-height: 62px;
+			width: 100px;
+			border: 3px solid #DEDEDE;
+			cursor: pointer;
+			font-size: 40px;
+		}
+		/*기회 설정 창*/
+		.ninfo {
+			background: #FFF; color: #FF0000;
+			width: 350px;
+			height: 40px;
+			border-radius: 0px;
+			margin: 20px auto 0 auto;
+			font-size: 40px;
+		}
+
+		.view {
+			position: absolute; top:0; left:0; right:0; bottom:0;  z-index: 1;
+			background: rgba(0,0,0,.8);
+			padding: 80px;
+			overflow-y: auto;
+			display: none;
+		}
+		.view .txt {
+			width: cal(100% - 20px); max-width: 380px; height: 600px; display: block;
+			margin: 0 auto; overflow-y: scroll; background: #FFF;
+			padding: 10px;
+			font-size: 20px;
+
+		}
+		.view #btn_close {
+			width: 50%; max-width: 400px; height: 50px; color: #FFF; background: #00A1FF; cursor: pointer;
+			margin: 0 auto; display: block; text-align: center; font-size: 30px; margin-top: 10px;
+			line-height: 50px;
+		}
+		.view #btn_next {
+			width: 50%; max-width: 400px; height: 50px; color: #FFF; background: #A100FF; cursor: pointer;
+			margin: 0 auto; display: block; text-align: center; font-size: 30px; margin-top: 10px;
+			line-height: 50px;
+		}
+		.detail_view {
+			position: absolute; top:0; left:0; right:0; bottom:0;  z-index: 1;
+			background: rgba(0,0,0,.8);
+			padding: 80px;
+			overflow-y: auto;
+			display: none;
+		}
+		.detail_view .txt {
+			width: cal(100% - 20px); max-width: 380px; height: 300px; display: block;
+			margin: 0 auto; overflow-y: scroll; background: #FFF;
+			padding: 10px;
+			font-size: 20px;
+
+		}
+		.detail_view #btn_detail_close {
+			width: 100%; max-width: 400px; height: 30px; color: #FFF; background: #00A1FF; cursor: pointer;
+			margin: 0 auto; display: block; text-align: center; font-size: 23px; margin-top: 10px;
+		}
+
+		.image_view {
+			position: absolute; top:0; left:0; right:0; bottom:0;  z-index: 1;
+			background: rgba(0,0,0,.8);
+			padding: 80px;
+			overflow-y: auto;
+			display: none;
+		}
+		.image_view .txt {
+			width: cal(100% - 20px); max-width: 700px; height: 700px; display: block;
+			margin: 0 auto; overflow-y: scroll; background: #FFF;
+			padding: 10px;
+			font-size: 20px;
+		}
+		.image_view .txt .hint_img {
+			width: 100%;
+		}
+		.image_view #btn_image_close {
+			width: 100%; max-width: 400px; height: 30px; color: #FFF; background: #00A1FF; cursor: pointer;
+			margin: 0 auto; display: block; text-align: center; font-size: 23px; margin-top: 10px;
+		}
+	</style>
+
+	<script>
+
+		var cnt = 4;
+		ref();
+
+		function ref(){
+			$('.ninfo').text('남은 기회: ' + cnt + '번');
+		}
+
+		function chk(val){
+			if (val == '7777'){
+				cnt = 1;
+				alert('기회가 1회로 설정 되었습니다.');
+				ref();
+				return;
+			} else if (val == '8088'){
+				cnt = 4;
+				alert('기회가 4회로 설정 되었습니다.');
+				ref();
+				return;
+			} else if (cnt <= 0) {
+				alert('힌트 횟수가 없습니다. 방안에 행운의 볼을 찾으세요! 추가힌트의 기회가 있습니다!.');
+				return;
+			}
+			cnt--;
+			ref();
+
+			var txt = '';
+			var key = '';
+
+			switch (val) {
+				case '20199':
+					txt = '준모 건강주의사항이 <strong><u>화장대</u>에 올려져</strong> 있습니다.<br> 준모 건강주의사항 표는 화장대의 누르는 자물쇠의 모양과 닮아 있습니다.<br>  세경의 수첩은 배개 밑에 있는데 그 안에 남편인 준모가<br>조심해야할 것이 5가지 적혀져 있습니다. 수첩과 비교하여 답을 얻어냅니다.   <br>수첩과 비교하여 답을 얻어냅니다.';
+					key = '23689';
+					break;
+				case '20274':
+					txt = '구멍이 뚫린 진단서와 컴퓨터 책상에 <br 있는 진단서가 동일합니다. 대어 보면 구멍에 답이 보입니다. <br>컴퓨터의 유저 네임은 “진단서”라고 되어 있습니다.<br> 진단서에서 얻은 비밀번호 4자리를 입력하면 로그인을 할 수 있습니다.';
+					key = '1729';
+					break;
+				case '20348':
+					txt = '준모가 입원 이후로 매일 심박수를 체크해온 표가 컴퓨터에 있습니다. <br>열어보면 준모는 지속적으로 심박수를 체크해온 것을 알 수 있습니다.<br> 마지막 준모가 메모해 놓은 내용대로 정상이 얼마나 유지된 건지 세면 됩니다.  <br> 입원일부터 비정상 되기 전날까지의 일수.';
+					key = '1170';
+					break;
+				case '20469':
+					txt = '<br>우선 핸드폰에 앨범과 메모장을 먼저보시면 <br>세경이 보낸 카톡 내용 중 준모와 예진이 대화하는 은어 메시지가 있습니다. 각 해당하는 숫자가 영어 스펠링을 표현합니다.<br> 방에 석호옷이 있는데 영수증이 하나 보입니다. 영수증 하단에 있는 빨간색글씨 숫자를 보내준 암호해독표와 대조하여 풀어봅니다.';
+					key = 'KNIFE';
+					break;
+				case '20567':
+					txt = '보험증권 2장이 나왔는데 내용은 동일하지만<br>바코드의 위치가 다릅니다. 바코드 끝을 맞닿게 하면 (양쪽으로 가운데에 바코드가 모이게) <br>숫자를 얻을 수 있습니다.';
+					key = '23896';
+					break;
+				case '20732':
+					txt = '투명 약통에 4가지 색상의 약이 들어있습니다.  <br>금고에는 색상이 표시된 비밀번호를 누르는 내용이 있습니다.  <br>약의 색상의 개수를 눈으로 세어 금고의 비밀번호를 알아낼 수 있습니다.';
+					key = '004967';
+					break;
+				case '20654':
+					txt = '석호가 다녀간 경로를 지도에서  <br>이어보면 숫자를 얻을 수 있습니다. 우리집 주소는 세경이 가입한 보험증권에 주소가 있습니다. <br>지도는 컴퓨터 바탕화면에 있습니다.';
+					key = '9277';
+					break;
+				case '20844':
+					txt = '금고에서 후레쉬의 불빛이 <br>일반 후레쉬가 아닌 것을 알 수 있습니다. <br>서류의 뒷면을 비춰보면 숫자가 나옵니다.  <br>서류 날짜를 보면 순서를 알 수 있습니다.';
+					key = '4807';
+					break;
+				case '20953':
+					txt = '태수와 준모와 같이 찍은 사진과 신문기사를 볼수 있습니다. <br> 신문기사 뒤에 36이라는 글씨가 적혀있습니다.  <br>방안에 준모의 다른 신문기사를 찾을수 있는데 이 신문기사 또한 <br>뒤에 숫자가 적혀있습니다. <br>날짜순으로 보시면 3136입니다. 문에 입력해주세요';
+					break;
+				case '21048':
+					txt = '범인, 동기, 살해방법을 올려놓으면 됩니다<br>부검결과서, 증거요약본, 수사철 등 지금까지 해오면서<br> 알게 된 정보들로 답을 올려놓습니다. <br>언제: VITAMIN-X를 먹고 난 후 1시간이 흐르면 심정지가 옵니다<br> 준모는 심정지로 사망. 태수의 가방에서 비타민x와 복수를 다지는 쪽지발견 <br>왜: 준모는 살인소설을 직접 살인을하면서 소설을 썼습니다. 그러다 태수의동생이 그장면을 목격하게되고<br>준모는 병수를 방화로 살인을 하게 됩니다. <br>그 후 준모는 그일을 자신의 소설에 내보냈고   <br>태수는  병수의 사건날 별모양의 문신이라는 목격자 진술에 살짝 의심을 했지만 준모의 소설의내용을 보고 확신하여 형사에게 재수사요청을 <br>진행하였고 수사진행내용에 준모가 동생을 죽인것을 확신하게되어 범행을 계획하였습니다.';
+					key = '문구: 언제: 5월 18일 11:50 =부검결과서 확인<br>누가: 태수 <br>왜: 동생의 복수를 위해서<br>무엇을: 준모<br> 어떻게: 비타민-X를 먹여 심장병으로 죽게 했다.';
+					break;
+				case '21152':
+					txt = ' 판사대를 지정된 곳에 올리고 판사봉으로 문열릴때까지 쳐서 심판해주세요!!! ';
+					showDetailView(txt);
+					return;
+				case '29999':
+					txt = ' 사건번호를 알아야합니다. <br>사건번호 보시면 특이하게전화기 모양이 있습니다. <br>전화기랑 관련이 있으니 방안에 전화기를 찾아서<br>같이보시면 1은 알파벳이 없구 2부터 abc 알파벳순서로<br>나누어져 있는데요 . <br>각 알파벳이 있는 숫자대로 1번씩 입력된 것입니다. <br>예: abc=222 ady=239';
+					key = '3698';
+					break;
+				case '26666':
+					txt = ' 핸드폰 암호는 컴퓨터 쪽에있는 벽면에 그림으로 표시되어 있습니다. 표시대로 패턴을 입력해주세요.';
+					key = '72583(패턴)';
+					break;
+				case '99999':
+					txt = ' 자물쇠 열쇠는 지금 입고계신 조끼중에 1개의 조끼 오른쪽가슴에 달려 있습니다.';
+					showDetailView(txt);
+					return;
+				case '10555':
+					showImageView('<img class="hint_img" src="img/10555.png" alt="hint"/>');
+					return;
+				default:
+					cnt++;
+					ref();
+					txt = '입력하신"' + val + '" 대한 힌트가 없습니다.'
+					showDetailView(txt);
+					return;
+			}
+
+			$('.detail_view .txt').html(key);
+			showView(txt);
+		}
+
+		function showView(txt) {
+			$('.view .txt').html(txt);
+			$('.view').fadeIn(200);
+		}
+
+		function showDetailView(txt) {
+			$('.detail_view .txt').html(txt);
+			$('.detail_view').fadeIn(200);
+		}
+
+		function showImageView(txt) {
+			$('.image_view .txt').html(txt);
+			$('.image_view').fadeIn(200);
+		}
+
+		$('#btn_ok').on('click', function() {
+			chk($('.input_pw').val());
+			$('.input_pw').val('');
+		});
+
+		$('#btn_next').on('click', function() {
+			$('.view').fadeOut(100);
+			$('.detail_view').fadeIn(100);
+		});
+
+		$('#btn_close').on('click', function() {
+			$('.view').fadeOut(200);
+		});
+
+		$('#btn_detail_close').on('click', function() {
+			$('.detail_view').fadeOut(200);
+		});
+		$('#btn_image_close').on('click', function() {
+			$('.image_view').fadeOut(200);
+		});
+	</script>
+
+</html>
